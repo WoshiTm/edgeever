@@ -22,16 +22,13 @@
 
 ---
 
-### 步骤 2：在 Cloudflare 创建存储与数据库资源
+### 步骤 2：在 Cloudflare 创建数据库
 
-登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)；入口变化时参考官方的 [D1](https://developers.cloudflare.com/d1/get-started/) 和 [R2](https://developers.cloudflare.com/r2/get-started/) 指南：
+登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)；入口变化时参考官方的 [D1](https://developers.cloudflare.com/d1/get-started/) 指南：
 
 1. **创建 D1 数据库**：
    - 在 **Storage & databases** 中打开 **D1 SQL Database**，点击 **Create database**。
    - 数据库名称严格填入：`edgeever`，点击 **Create**。
-2. **创建 R2 存储桶**（用于存储笔记附件与图片）：
-   - 在 **Storage & databases** 中打开 **R2** -> **Overview**。如尚未开通 R2，先按页面提示完成订阅；然后点击 **Create bucket**。
-   - 存储桶名称严格填入：`edgeever-resources`，点击 **Create bucket**。
 
 ---
 
@@ -63,7 +60,7 @@
    - **Root directory**：保持留空，使用仓库根目录
    - Deploy command: npx wrangler deploy（保留默认值，由 Cloudflare 在线执行）
 
-Worker 名称必须与仓库 `wrangler.toml` 中的 `edgeever` 一致。部署命令会自动生成 `DB` 与 `RESOURCES` binding，并查询 D1 UUID。不要修改 Fork 中的文件，也不要在控制台重复添加 binding。
+Worker 名称必须与仓库 `wrangler.toml` 中的 `edgeever` 一致。部署命令会自动生成 `DB` binding，并查询 D1 UUID。不要修改 Fork 中的文件，也不要在控制台重复添加 binding。
 
 ---
 
@@ -111,14 +108,12 @@ EDGE_EVER_UPDATE_CHANNEL=edge
 | `EDGE_EVER_WORKER_NAME` | Worker 名称 |
 | `EDGE_EVER_D1_DATABASE_NAME` | D1 数据库名称，UUID 会自动查询 |
 | `EDGE_EVER_D1_DATABASE_ID` | 自动查询不可用时的可选 UUID 兜底值 |
-| `EDGE_EVER_R2_BUCKET_NAME` | 可选的生产 R2 存储桶显式覆盖；升级时默认沿用线上 binding |
-| `EDGE_EVER_R2_PREVIEW_BUCKET_NAME` | 预览环境 R2 存储桶名称 |
 | `EDGE_EVER_WORKERS_DEV` | 启用或禁用 `workers.dev` 路由 |
 | `EDGE_EVER_CUSTOM_DOMAIN` / `EDGE_EVER_ROUTE_PATTERN` | 自定义路由 |
 
 自定义管理员用户名须在启动首次构建前设置；账号创建后修改该变量不会重命名账号。
 
-旧部署的自定义 R2 存储桶无需迁移；不设置覆盖变量时，升级会沿用线上 `RESOURCES` binding。已有项目的显式构建命令也可继续使用，详见 [Workers Builds 配置](cloudflare-workers-builds.zh-CN.md)。
+已有项目的显式构建命令也可继续使用，详见 [Workers Builds 配置](cloudflare-workers-builds.zh-CN.md)。
 
 ---
 
@@ -126,7 +121,7 @@ EDGE_EVER_UPDATE_CHANNEL=edge
 
 - **缺少管理员 Secret**：在连接 Fork 的同一个 Worker 中，按步骤 4 添加并部署运行时 Secret，再重试失败的构建；缺少配置不是首次部署的必经步骤。
 - **仍显示 Hello World**：创建 Worker、部署 Secret 都不代表 EdgeEver 已部署。请完成步骤 7，并确认成功的生产构建对应 Fork 的 `main` commit。
-- **首次构建失败**：请检查 Cloudflare 控制台中 Worker 的 **Deployments** 构建日志，确认日志包含“routing it through EdgeEver's validated deployment pipeline”，标准资源名称严格为 `edgeever` 与 `edgeever-resources`，并确认 Workers Builds API Token 具有 D1 读取和编辑权限。如有意使用其他 D1 数据库，请设置 `EDGE_EVER_D1_DATABASE_NAME`；仅在自动查询 UUID 不可用时再添加 `EDGE_EVER_D1_DATABASE_ID`。
+- **首次构建失败**：请检查 Cloudflare 控制台中 Worker 的 **Deployments** 构建日志，确认日志包含“routing it through EdgeEver's validated deployment pipeline”，标准 D1 数据库名称严格为 `edgeever`，并确认 Workers Builds API Token 具有 D1 读取和编辑权限。如有意使用其他 D1 数据库，请设置 `EDGE_EVER_D1_DATABASE_NAME`；仅在自动查询 UUID 不可用时再添加 `EDGE_EVER_D1_DATABASE_ID`。
 - **无法同步上游更新**：
   1. 打开 Fork 的 **Actions**，启用 **Update deployed EdgeEver**（公共 Fork 上定时任务默认关闭）。
   2. 手动 **Run workflow** 一次，打开中英双语 Job **Summary**：会分别展示上游目标、Git 发布结果、部署触发状态，以及线上部署是否已经验证。

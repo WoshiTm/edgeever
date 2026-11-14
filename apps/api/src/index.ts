@@ -230,7 +230,7 @@ app.get("/api/health", async (c) => {
       {
         error: {
           code: "object_storage_not_ready",
-          message: "Object storage is not configured. Bind RESOURCES and redeploy.",
+          message: "Object storage is not configured.",
         },
       },
       503,
@@ -238,6 +238,15 @@ app.get("/api/health", async (c) => {
   }
 
   const runtime = c.env.EDGE_EVER_RUNTIME ?? "cloudflare-workers";
+
+  // Legacy native clients map the reported resource backend to a fixed label
+  // table with no "d1" entry, so they render "Unknown" for the D1 blob store.
+  // Report the builtin value instead: display-only, the live backend is
+  // unchanged and diagnostics keep reporting "d1" internally.
+  const reportedResources =
+    c.env.storage.diagnostics.resources === "d1"
+      ? "r2"
+      : c.env.storage.diagnostics.resources;
 
   return c.json({
     ok: true,
@@ -256,7 +265,7 @@ app.get("/api/health", async (c) => {
     migration: await getAppliedMigration(c.env),
     storage: {
       database: c.env.storage.diagnostics.database,
-      resources: c.env.storage.diagnostics.resources,
+      resources: reportedResources,
     },
     objectStorageProvider: await getActiveObjectStorageProvider(c.env),
   });

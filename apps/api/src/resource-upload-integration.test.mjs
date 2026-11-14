@@ -4,6 +4,7 @@ import { mkdtemp, readdir, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fetchEdgeEverApp } from "./index.ts";
+import { RESOURCE_UPLOAD_PART_BYTES } from "./resource-upload-service.ts";
 import { createSelfHostedStorageAdapter } from "./self-hosted-storage-adapter.ts";
 import { createEdgeEverClient } from "../../../packages/client/src/index.ts";
 
@@ -108,7 +109,8 @@ describe("resource upload integration", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ filename: "archive.bin", mimeType: "application/octet-stream", byteSize: file.byteLength }),
     });
-    expect(started.upload.partCount).toBe(2);
+    expect(started.upload.partSize).toBe(RESOURCE_UPLOAD_PART_BYTES);
+    expect(started.upload.partCount).toBe(Math.ceil(file.byteLength / RESOURCE_UPLOAD_PART_BYTES));
 
     for (let partNumber = 1; partNumber <= started.upload.partCount; partNumber += 1) {
       const start = (partNumber - 1) * started.upload.partSize;

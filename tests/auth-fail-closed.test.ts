@@ -56,18 +56,16 @@ describe("production authentication guard", () => {
     });
   });
 
-  test("reports a missing R2 binding as object_storage_not_ready", async () => {
+  test("reports healthy with D1 resource storage when no R2 binding is configured", async () => {
     const response = await fetchApi("/api/health", {
       DB: createDatabase({ userId: "owner" }),
       EDGE_EVER_AUTH_PASSWORD: "configured-secret",
     });
 
-    expect(response.status).toBe(503);
-    expect(await response.json()).toEqual({
-      error: {
-        code: "object_storage_not_ready",
-        message: "Object storage is not configured. Bind RESOURCES and redeploy.",
-      },
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({
+      ok: true,
+      storage: { database: "d1", resources: "d1" },
     });
   });
 

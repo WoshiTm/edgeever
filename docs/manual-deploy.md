@@ -16,7 +16,7 @@ Use this page for advanced configuration, troubleshooting, and emergency recover
    bun run deploy:manual
    ```
 
-`deploy:setup` creates or reuses D1 and R2 and writes configuration to the git-ignored `.env.local`. `EDGE_EVER_PASSWORD` is required for a new deployment; there is no default production password.
+`deploy:setup` creates or reuses the D1 database and writes configuration to the git-ignored `.env.local`. `EDGE_EVER_PASSWORD` is required for a new deployment; there is no default production password.
 
 For local CLI deployment, set `EDGE_EVER_DEPLOYMENT_URL=https://<your-worker-domain>` in `.env.local` to include the live `/api/health` request in deployment verification. CI deployments discover the public URL automatically from Wrangler output. Without an explicit URL, local verification still checks the remote D1 schema and Worker Secret, then reports that the live health check was skipped.
 
@@ -32,14 +32,12 @@ After deployment, confirm:
 cp .env.local.example .env.local
 bun install
 bunx wrangler d1 create edgeever
-bunx wrangler r2 bucket create edgeever-resources
 ```
 
 Write the returned D1 ID and resource names to `.env.local`:
 
 ```text
 EDGE_EVER_D1_DATABASE_ID=<database_id>
-EDGE_EVER_R2_BUCKET_NAME=edgeever-resources
 EDGE_EVER_AUTH_USERNAME=admin
 EDGE_EVER_AUTH_PASSWORD=<strong password>
 EDGE_EVER_SESSION_TTL_DAYS=400

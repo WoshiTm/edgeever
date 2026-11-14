@@ -432,8 +432,8 @@ describe("Cloudflare deployment entrypoints", () => {
         resolve(workingDirectory, ".wrangler.generated.toml"),
         "utf8",
       );
-      expect(generatedConfig).toContain('bucket_name = "legacy-user-resources"');
-      expect(generatedConfig).toContain('EDGE_EVER_R2_BUCKET_NAME = "legacy-user-resources"');
+      expect(generatedConfig).toContain('bucket_name = "edgeever-resources"');
+      expect(generatedConfig).not.toContain("EDGE_EVER_R2_BUCKET_NAME");
       expect(generatedConfig).toContain('EDGE_EVER_AUTH_USERNAME = "legacy-owner"');
     } finally {
       rmSync(workingDirectory, { force: true, recursive: true });

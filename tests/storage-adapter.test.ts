@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { Database } from "bun:sqlite";
+import { mkdtemp, readdir, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { createCloudflareStorageAdapter } from "../apps/api/src/cloudflare-storage-adapter";
 import { createSelfHostedStorageAdapter } from "../apps/api/src/self-hosted-storage-adapter";
@@ -19,6 +20,39 @@ describe("storage adapter", () => {
       resources: "r2",
       migrationTable: "d1_migrations",
     });
+  });
+
+  test("falls back to D1 blob storage when no R2 binding is present", async () => {
+    const database = new Database(":memory:");
+    const migrationDirectory = new URL("../migrations/", import.meta.url);
+    const names = (await readdir(migrationDirectory))
+      .filter((name) => name.endsWith(".sql"))
+      .sort();
+    for (const name of names) {
+      database.exec(await readFile(new URL(name, migrationDirectory), "utf8"));
+    }
+    const directory = await mkdtemp(`${tmpdir()}/edgeever-storage-`);
+
+    try {
+      const db = createSelfHostedStorageAdapter(database, directory).db;
+      const adapter = createCloudflareStorageAdapter({ DB: db });
+
+      expect(adapter.db).toBe(db);
+      expect(adapter.diagnostics).toEqual({
+        database: "d1",
+        resources: "d1",
+        migrationTable: "d1_migrations",
+      });
+      await adapter.resources.put("memo/image.bin", new Uint8Array([1, 2, 3]));
+      const object = await adapter.resources.get("memo/image.bin");
+      expect(object).not.toBeNull();
+      expect(new Uint8Array(await new Response(object!.body).arrayBuffer())).toEqual(
+        new Uint8Array([1, 2, 3]),
+      );
+    } finally {
+      database.close();
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   test("keeps the self-hosted database dialect explicit", () => {

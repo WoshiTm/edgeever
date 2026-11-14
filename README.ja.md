@@ -107,7 +107,7 @@ Cloudflare のオンライン導入は、次のいずれかです。
 ```text
 GitHub と Cloudflare のオンライン操作だけで EdgeEver を導入してください:
 1. Fork https://github.com/tianma-if/edgeever。
-2. Cloudflare で D1 `edgeever` と R2 `edgeever-resources` を作成します。
+2. Cloudflare で D1 `edgeever` を作成します。
 3. Workers & Pages で「Start with Hello World!」を選び、`edgeever` という名前の Worker を作成します。
 4. Worker の Settings → Variables and Secrets で、指定されたログインパスワードを
    実行時 Secret `EDGE_EVER_AUTH_PASSWORD` として追加し、Deploy を選択します
@@ -131,7 +131,7 @@ GitHub と Cloudflare のオンライン操作だけで EdgeEver を導入して
 以下の 7 手順を、必ず記載の順番どおりにウェブ上で実行してください。
 
 1. **リポジトリを Fork**：GitHub 右上の **Fork** で、EdgeEver を自分のアカウントへ Fork します。
-2. **Cloudflare リソースを作成**：D1 `edgeever` と R2 `edgeever-resources` を作ります。
+2. **Cloudflare リソースを作成**：D1 `edgeever` を作ります。
 3. **Worker を作成**：Cloudflare Workers & Pages で Create application → Start with Hello World! を選び、`edgeever` という名前でデプロイします。これは仮のサービスで、EdgeEver は手順 7 でデプロイします。
 4. **管理者パスワードを設定**：Worker の Settings → Variables and Secrets で Secret 型の `EDGE_EVER_AUTH_PASSWORD` を追加し、Deploy を選択します。値はログインパスワードで、32 文字以上を推奨します。完了後に Fork へ接続します。
 5. **Fork に接続**：既存 Worker の Settings → Builds → Connect で Fork と本番ブランチ `main` を選びます。
@@ -143,11 +143,9 @@ GitHub と Cloudflare のオンライン操作だけで EdgeEver を導入して
 </details>
 
 <details>
-<summary>📌 Cloudflare 導入の注意事項を確認（独自ドメイン紐付けと R2 無料枠）</summary>
+<summary>📌 Cloudflare 導入の注意事項を確認（独自ドメイン紐付け）</summary>
 
 > **ドメインとアクセス**：デプロイ完了後は、Cloudflare から自動で割り当てられる `*.workers.dev` ドメインでそのまま利用できるほか、Worker の **Settings → Domains & Routes** で独自のカスタムドメインを紐付けることもできます。
->
-> **Cloudflare R2 の有効化**：Cloudflare R2 にはノート用途で足りる [無料保存枠](https://developers.cloudflare.com/r2/pricing/#free-tier) がありますが、先に R2 のサブスクリプションを有効にし、支払い方法を登録する必要があります。Cloudflare は [公式に](https://developers.cloudflare.com/billing/get-started/update-billing-info/#supported-payment-methods) UnionPay、Visa、Mastercard などのカードと、PayPal、Apple Pay、Google Pay などを受け付けます。
 
 </details>
 

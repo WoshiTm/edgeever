@@ -109,7 +109,7 @@ Copia el siguiente prompt directamente en un agente de IA (como Codex, Claude, C
 ```text
 Despliega EdgeEver íntegramente a través de GitHub y Cloudflare:
 1. Haz un Fork de https://github.com/tianma-if/edgeever.
-2. Crea la base de datos D1 `edgeever` y el bucket R2 `edgeever-resources` en Cloudflare.
+2. Crea la base de datos D1 `edgeever` en Cloudflare.
 3. En Workers & Pages, selecciona "Start with Hello World!" y crea un Worker llamado `edgeever`.
 4. Añade la contraseña elegida por el usuario como el secreto de ejecución `EDGE_EVER_AUTH_PASSWORD`
    en Settings → Variables and Secrets, y despliega el secreto (preferiblemente de al menos
@@ -131,7 +131,7 @@ Despliega EdgeEver íntegramente a través de GitHub y Cloudflare:
 Completa los siguientes 7 pasos en la web estrictamente en orden:
 
 1. **Hacer Fork del repositorio**: Haz clic en **Fork** en la parte superior derecha de GitHub para bifurcar EdgeEver en tu cuenta personal.
-2. **Crear recursos en Cloudflare**: Crea la base de datos D1 `edgeever` y el bucket R2 `edgeever-resources`.
+2. **Crear recursos en Cloudflare**: Crea la base de datos D1 `edgeever`.
 3. **Crear el Worker**: En Cloudflare Workers & Pages, selecciona Create application → Start with Hello World!, asigna al Worker el nombre `edgeever` y despliégalo. Esto crea un marcador de posición; EdgeEver se desplegará en el paso 7.
 4. **Configurar la contraseña de administrador**: En Settings → Variables and Secrets del Worker, añade `EDGE_EVER_AUTH_PASSWORD` con el tipo Secret y haz clic en Deploy. Su valor es la contraseña de inicio de sesión elegida, preferiblemente de al menos 32 caracteres. Completa esto antes de conectar el Fork.
 5. **Conectar el Fork**: En Settings → Builds → Connect del Worker existente, selecciona el Fork y la rama de producción `main`.
@@ -143,11 +143,9 @@ Completa los siguientes 7 pasos en la web estrictamente en orden:
 </details>
 
 <details>
-<summary>📌 Ver notas sobre el despliegue en Cloudflare (dominio personalizado y cuota gratuita de R2)</summary>
+<summary>📌 Ver notas sobre el despliegue en Cloudflare (dominio personalizado)</summary>
 
 > **Dominio personalizado y acceso**: Tras el despliegue, puedes utilizar directamente el dominio predeterminado `*.workers.dev` asignado por Cloudflare, o vincular tu propio dominio personalizado en la configuración del Worker en **Settings → Domains & Routes**.
->
-> **Activación de Cloudflare R2**: Aunque Cloudflare R2 ofrece una generosa [cuota de almacenamiento gratuita](https://developers.cloudflare.com/r2/pricing/#free-tier) en la que las cargas de trabajo de toma de notas se mantienen por completo, primero debes activar una suscripción a R2 y añadir un método de pago. Cloudflare [admite oficialmente](https://developers.cloudflare.com/billing/get-started/update-billing-info/#supported-payment-methods) tarjetas UnionPay, Visa y Mastercard, así como PayPal, Apple Pay, Google Pay y otros métodos de pago.
 
 </details>
 

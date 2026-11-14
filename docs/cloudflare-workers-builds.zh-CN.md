@@ -12,9 +12,9 @@
 
 在 Worker 的 **Settings → Variables and Secrets** 中设置运行时 Secret `EDGE_EVER_AUTH_PASSWORD`，不要放入 Builds 构建变量。
 
-普通部署使用 D1 `edgeever`、R2 `edgeever-resources` 和用户名 `admin`。可选的非敏感实例参数放在 **Settings → Build → Build variables and secrets**；这些变量仅供构建使用，部署命令会据此生成临时 Wrangler 配置。不要修改仓库中的 `wrangler.toml`。
+普通部署使用 D1 `edgeever` 和用户名 `admin`。可选的非敏感实例参数放在 **Settings → Build → Build variables and secrets**；这些变量仅供构建使用，部署命令会据此生成临时 Wrangler 配置。不要修改仓库中的 `wrangler.toml`。
 
-未显式覆盖时，旧部署会保留当前的 R2 存储桶和管理员用户名。
+未显式覆盖时，旧部署会保留当前的管理员用户名。
 
 ## 更新与排错
 

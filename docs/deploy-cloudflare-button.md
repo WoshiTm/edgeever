@@ -7,7 +7,7 @@ Deploy EdgeEver through GitHub and Cloudflare in your browser, without installin
 ## Prerequisites
 
 - **GitHub Account** (for Forking the repository and enabling automated updates)
-- **Cloudflare Account** (for hosting Worker logic, SQLite D1 database, and R2 storage)
+- **Cloudflare Account** (for hosting Worker logic and the SQLite D1 database)
 
 ---
 
@@ -22,16 +22,13 @@ Complete the following steps strictly in order.
 
 ---
 
-### Step 2: Create Storage & Database Resources in Cloudflare
+### Step 2: Create the Database in Cloudflare
 
-Log into your [Cloudflare Dashboard](https://dash.cloudflare.com/). If an entry moves, see the official [D1](https://developers.cloudflare.com/d1/get-started/) and [R2](https://developers.cloudflare.com/r2/get-started/) guides:
+Log into your [Cloudflare Dashboard](https://dash.cloudflare.com/). If an entry moves, see the official [D1](https://developers.cloudflare.com/d1/get-started/) guide:
 
 1. **Create a D1 Database**:
    - Under **Storage & databases**, open **D1 SQL Database** and click **Create database**.
    - Database name: exactly `edgeever`, then click **Create**.
-2. **Create an R2 Bucket** (for note attachments & images):
-   - Under **Storage & databases**, open **R2** -> **Overview**. If R2 is not yet enabled, complete the subscription flow shown there; then click **Create bucket**.
-   - Bucket name: exactly `edgeever-resources`, then click **Create bucket**.
 
 ---
 
@@ -63,7 +60,7 @@ Confirm the Secret name appears in the list before continuing. The Worker curren
    - **Root directory**: Leave blank to use the repository root
    - Deploy command: npx wrangler deploy (keep the default; Cloudflare runs it online)
 
-The Worker name must match `edgeever` in the repository's `wrangler.toml`. The deployment command creates the `DB` and `RESOURCES` bindings and looks up the D1 UUID. Do not edit Fork files or add duplicate bindings in the Dashboard.
+The Worker name must match `edgeever` in the repository's `wrangler.toml`. The deployment command creates the `DB` binding and looks up the D1 UUID. Do not edit Fork files or add duplicate bindings in the Dashboard.
 
 ---
 
@@ -111,14 +108,12 @@ To customize an instance, add non-secret values under the Worker's **Settings �
 | `EDGE_EVER_WORKER_NAME` | Worker name |
 | `EDGE_EVER_D1_DATABASE_NAME` | D1 database name; its UUID is discovered automatically |
 | `EDGE_EVER_D1_DATABASE_ID` | Optional UUID fallback when discovery is unavailable |
-| `EDGE_EVER_R2_BUCKET_NAME` | Optional explicit production R2 bucket override; upgrades otherwise reuse the live binding |
-| `EDGE_EVER_R2_PREVIEW_BUCKET_NAME` | Preview R2 bucket name |
 | `EDGE_EVER_WORKERS_DEV` | Enable or disable the `workers.dev` route |
 | `EDGE_EVER_CUSTOM_DOMAIN` / `EDGE_EVER_ROUTE_PATTERN` | Custom routing |
 
 Set a custom administrator username before starting the first build; changing the variable after the account exists does not rename it.
 
-Older deployments need not migrate a custom R2 bucket; upgrades reuse the live `RESOURCES` binding unless overridden. Existing explicit build commands remain supported; see [Workers Builds configuration](cloudflare-workers-builds.md).
+Existing explicit build commands remain supported; see [Workers Builds configuration](cloudflare-workers-builds.md).
 
 ---
 
@@ -126,7 +121,7 @@ Older deployments need not migrate a custom R2 bucket; upgrades reuse the live `
 
 - **Missing administrator Secret**: Add and deploy the runtime Secret from Step 4 on the same Worker connected to the Fork, then retry the failed build. Missing configuration is not a required first-deployment step.
 - **Still seeing Hello World**: Creating the Worker or deploying its Secret does not deploy EdgeEver. Complete Step 7 and confirm the successful production build uses the Fork’s `main` commit.
-- **Initial build failed**: Check the Worker **Deployments** log for “routing it through EdgeEver's validated deployment pipeline”. Verify that the standard resources are named exactly `edgeever` and `edgeever-resources`, and that the Workers Builds API token has D1 read/edit permission. For an intentionally different D1 database, set `EDGE_EVER_D1_DATABASE_NAME`; add `EDGE_EVER_D1_DATABASE_ID` only if automatic UUID discovery is unavailable.
+- **Initial build failed**: Check the Worker **Deployments** log for “routing it through EdgeEver's validated deployment pipeline”. Verify that the standard D1 database is named exactly `edgeever`, and that the Workers Builds API token has D1 read/edit permission. For an intentionally different D1 database, set `EDGE_EVER_D1_DATABASE_NAME`; add `EDGE_EVER_D1_DATABASE_ID` only if automatic UUID discovery is unavailable.
 - **Updates not syncing**:
   1. On the Fork **Actions** tab, enable **Update deployed EdgeEver** (scheduled workflows are off by default on public forks).
   2. Run it once with **Run workflow**. Open the bilingual job **Summary**: it separately reports the upstream target, Git publish result, deployment trigger, and whether the live deployment was verified.

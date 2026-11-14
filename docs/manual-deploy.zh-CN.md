@@ -16,7 +16,7 @@
    bun run deploy:manual
    ```
 
-`deploy:setup` 会创建或复用 D1、R2，并将配置写入被 Git 忽略的 `.env.local`。新部署必须提供 `EDGE_EVER_PASSWORD`，生产环境不存在默认密码。
+`deploy:setup` 会创建或复用 D1 数据库，并将配置写入被 Git 忽略的 `.env.local`。新部署必须提供 `EDGE_EVER_PASSWORD`，生产环境不存在默认密码。
 
 使用本地 CLI 部署时，可在 `.env.local` 中设置 `EDGE_EVER_DEPLOYMENT_URL=https://<你的 Worker 域名>`，让部署验证同时请求线上的 `/api/health`；CI 部署会自动从 Wrangler 输出中识别公网地址。未显式配置地址时，本地验证仍会检查远端 D1 schema 和 Worker Secret，并明确提示已跳过线上健康检查。
 
@@ -32,14 +32,12 @@
 cp .env.local.example .env.local
 bun install
 bunx wrangler d1 create edgeever
-bunx wrangler r2 bucket create edgeever-resources
 ```
 
 将返回的 D1 ID 和资源名称写入 `.env.local`：
 
 ```text
 EDGE_EVER_D1_DATABASE_ID=<database_id>
-EDGE_EVER_R2_BUCKET_NAME=edgeever-resources
 EDGE_EVER_AUTH_USERNAME=admin
 EDGE_EVER_AUTH_PASSWORD=<强密码>
 EDGE_EVER_SESSION_TTL_DAYS=400

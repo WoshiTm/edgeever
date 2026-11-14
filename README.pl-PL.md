@@ -107,7 +107,7 @@ Skopiuj poniższe polecenie do agenta AI, na przykład Codex, Claude, Cursor, Wo
 ```text
 Wdróż EdgeEver przez GitHub i Cloudflare:
 1. Utwórz Fork repozytorium https://github.com/tianma-if/edgeever.
-2. Utwórz bazę D1 `edgeever` i zasobnik R2 `edgeever-resources` w Cloudflare.
+2. Utwórz bazę D1 `edgeever` w Cloudflare.
 3. W Workers & Pages wybierz „Start with Hello World!” i utwórz Worker o nazwie `edgeever`.
 4. W Settings → Variables and Secrets dodaj wybrane hasło jako sekret środowiska
    uruchomieniowego `EDGE_EVER_AUTH_PASSWORD` i kliknij Deploy (zalecane co najmniej
@@ -131,7 +131,7 @@ Wdróż EdgeEver przez GitHub i Cloudflare:
 Wykonaj poniższe siedem kroków w przeglądarce ściśle w podanej kolejności:
 
 1. **Utwórz Fork repozytorium**: Kliknij **Fork** w prawym górnym rogu strony GitHub, aby utworzyć kopię EdgeEver na swoim koncie.
-2. **Utwórz zasoby Cloudflare**: Utwórz bazę D1 `edgeever` i zasobnik R2 `edgeever-resources`.
+2. **Utwórz zasoby Cloudflare**: Utwórz bazę D1 `edgeever`.
 3. **Utwórz Workera**: W Cloudflare Workers & Pages wybierz Create application → Start with Hello World!, nazwij Workera `edgeever` i wdróż go. To usługa tymczasowa; EdgeEver zostanie wdrożony w kroku 7.
 4. **Ustaw hasło administratora**: W Settings → Variables and Secrets Workera dodaj `EDGE_EVER_AUTH_PASSWORD` jako typ Secret i kliknij Deploy. Wartością jest wybrane hasło logowania, najlepiej co najmniej 32 znaki. Zrób to przed podłączeniem Forka.
 5. **Podłącz Fork**: W Settings → Builds → Connect istniejącego Workera wybierz Fork i gałąź produkcyjną `main`.
@@ -143,11 +143,9 @@ Wykonaj poniższe siedem kroków w przeglądarce ściśle w podanej kolejności:
 </details>
 
 <details>
-<summary>📌 Uwagi dotyczące wdrożenia na Cloudflare (własna domena i darmowy limit R2)</summary>
+<summary>📌 Uwagi dotyczące wdrożenia na Cloudflare (własna domena)</summary>
 
 > **Domena i dostęp**: Możesz użyć domyślnej domeny `*.workers.dev` lub podłączyć własną w ustawieniach Workera: **Settings → Domains & Routes**.
->
-> **Aktywacja Cloudflare R2**: Choć [darmowy limit przestrzeni R2](https://developers.cloudflare.com/r2/pricing/#free-tier) wystarcza na typowe notatki, najpierw trzeba aktywować subskrypcję R2 i dodać metodę płatności. Cloudflare [obsługuje](https://developers.cloudflare.com/billing/get-started/update-billing-info/#supported-payment-methods) karty UnionPay, Visa i Mastercard oraz PayPal, Apple Pay i Google Pay.
 
 </details>
 

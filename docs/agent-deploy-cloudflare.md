@@ -13,7 +13,6 @@ This document defines the standard operating specifications and conventions for 
 
 2. **Create Cloudflare Resources**
    - Create a D1 database named exactly `edgeever`.
-   - Create an R2 bucket named exactly `edgeever-resources`.
 
 3. **Create the Worker**
    - In **Workers & Pages** → **Create application** → **Start with Hello World!**, create and deploy a Worker named exactly `edgeever`.
@@ -26,8 +25,8 @@ This document defines the standard operating specifications and conventions for 
 5. **Connect the Fork**
    - Open this existing Worker's **Settings** → **Builds** → **Connect**, authorize GitHub access, and select the Fork's `main` branch. Follow [Cloudflare's existing-Worker instructions](https://developers.cloudflare.com/workers/ci-cd/builds/#connect-an-existing-worker). Do not use the Deploy to Cloudflare template entrypoint or create a Pages application.
    - Use the repository root and default deploy command `npx wrangler deploy`; Cloudflare runs it online through EdgeEver's validated deployment pipeline. Existing deployments may keep explicit `bun run build:cloudflare` and `bun run deploy:cloudflare-builds` commands.
-   - Do not edit `wrangler.toml` or add duplicate bindings. Deployment automatically resolves the D1 UUID from `edgeever` and generates temporary `DB` and `RESOURCES` bindings. For a different database name, set `EDGE_EVER_D1_DATABASE_NAME`; use `EDGE_EVER_D1_DATABASE_ID` only if UUID discovery is unavailable. Non-secret instance settings belong in Workers Builds variables.
-   - Existing deployments retain their live `RESOURCES` binding and administrator username unless explicitly overridden; do not ask users to rename or reconfigure a custom R2 bucket. Keep tracked configuration unchanged so the Fork remains a deployment mirror.
+   - Do not edit `wrangler.toml` or add duplicate bindings. Deployment automatically resolves the D1 UUID from `edgeever` and generates a temporary `DB` binding. For a different database name, set `EDGE_EVER_D1_DATABASE_NAME`; use `EDGE_EVER_D1_DATABASE_ID` only if UUID discovery is unavailable. Non-secret instance settings belong in Workers Builds variables.
+   - Existing deployments retain their administrator username unless explicitly overridden. Keep tracked configuration unchanged so the Fork remains a deployment mirror.
 
 6. **Configure Deployment Permissions**
    - In **Settings → Builds → API token**, select or create the Cloudflare API token used by Workers Builds to deploy the application. **Create new token** generates a token automatically; its defaults may lack D1. Add D1 read/edit permission for the target account under [My Profile → API Tokens](https://dash.cloudflare.com/profile/api-tokens), retaining its existing deployment permissions. Select this token in the Worker’s **Settings → Builds → API token** and save the build settings. Subsequent Cloudflare Workers Builds runs use it for database migrations and Worker deployment.

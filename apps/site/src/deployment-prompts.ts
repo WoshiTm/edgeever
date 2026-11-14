@@ -1,7 +1,7 @@
 export const deploymentPrompts = {
   "en-US": `Deploy EdgeEver entirely through GitHub and Cloudflare:
 1. Fork https://github.com/tianma-if/edgeever.
-2. Create D1 \`edgeever\` and R2 \`edgeever-resources\` in Cloudflare.
+2. Create D1 \`edgeever\` in Cloudflare.
 3. In Workers & Pages, select "Start with Hello World!" and create a Worker named \`edgeever\`.
 4. Add the user's chosen password as the runtime Secret \`EDGE_EVER_AUTH_PASSWORD\`
    under Settings → Variables and Secrets, and deploy the Secret (preferably at least
@@ -14,7 +14,7 @@ export const deploymentPrompts = {
    This workflow will automatically sync future stable releases and fixes.`,
   "zh-CN": `请全程通过 GitHub 和 Cloudflare 在线部署 EdgeEver：
 1. Fork https://github.com/tianma-if/edgeever。
-2. 在 Cloudflare 中创建 D1 \`edgeever\` 与 R2 \`edgeever-resources\`。
+2. 在 Cloudflare 中创建 D1 \`edgeever\`。
 3. 在 Workers & Pages 中选择「Start with Hello World!」，创建名为 \`edgeever\` 的 Worker。
 4. 在该 Worker 的 Settings → Variables and Secrets 中添加运行时 Secret
    \`EDGE_EVER_AUTH_PASSWORD\`，值为用户指定的登录密码（建议至少 32 个字符），并点击 Deploy。
@@ -39,7 +39,7 @@ export const manualDeploymentCopy = {
       },
       {
         "title": "Create Cloudflare Resources",
-        "body": "Create D1 edgeever and R2 edgeever-resources."
+        "body": "Create D1 edgeever."
       },
       {
         "title": "Create the Worker",
@@ -72,7 +72,7 @@ export const manualDeploymentCopy = {
       },
       {
         "title": "创建 Cloudflare 资源",
-        "body": "创建 D1 edgeever 与 R2 edgeever-resources。"
+        "body": "创建 D1 edgeever。"
       },
       {
         "title": "创建 Worker",

@@ -107,7 +107,7 @@ Cloudflare 線上部署可以選擇以下兩種方式之一：
 ```text
 請全程透過 GitHub 和 Cloudflare 線上部署 EdgeEver：
 1. Fork https://github.com/tianma-if/edgeever。
-2. 在 Cloudflare 中建立 D1 `edgeever` 與 R2 `edgeever-resources`。
+2. 在 Cloudflare 中建立 D1 `edgeever`。
 3. 在 Workers & Pages 中選擇「Start with Hello World!」，建立名為 `edgeever` 的 Worker。
 4. 在該 Worker 的 Settings → Variables and Secrets 中新增執行時 Secret
    `EDGE_EVER_AUTH_PASSWORD`，值為使用者指定的登入密碼（建議至少 32 個字元），並點選 Deploy。
@@ -132,7 +132,7 @@ Cloudflare 線上部署可以選擇以下兩種方式之一：
 請嚴格依照以下順序，在網頁端完成 7 步設定：
 
 1. **Fork 儲存庫**：在 GitHub 點選右上角 **Fork**，將專案 Fork 到您的個人帳戶下。
-2. **建立 Cloudflare 資源**：建立 D1 `edgeever` 與 R2 `edgeever-resources`。
+2. **建立 Cloudflare 資源**：建立 D1 `edgeever`。
 3. **建立 Worker**：在 Cloudflare Workers & Pages 中選擇 Create application → Start with Hello World!，命名為 `edgeever` 並部署。此時是預留服務，第 7 步才部署 EdgeEver。
 4. **設定管理員密碼**：在該 Worker 的 Settings → Variables and Secrets 中，選擇 Secret 類型，新增 `EDGE_EVER_AUTH_PASSWORD` 並點選 Deploy。值為您指定的登入密碼，建議至少 32 個字元。完成後再連接 Fork。
 5. **連接 Fork**：在既有 Worker 的 Settings → Builds → Connect 中選擇 Fork 和正式環境分支 `main`。
@@ -144,11 +144,9 @@ Cloudflare 線上部署可以選擇以下兩種方式之一：
 </details>
 
 <details>
-<summary>📌 查看 Cloudflare 部署須知（自訂網域綁定與 R2 免費額度）</summary>
+<summary>📌 查看 Cloudflare 部署須知（自訂網域綁定）</summary>
 
 > **網域與存取**：實例部署完成後，可以直接使用 Cloudflare 預設分配的 `*.workers.dev` 網域存取，也可以在 Worker 設定中的 **Settings → Domains & Routes** 綁定自己的自訂網域。
->
-> **Cloudflare R2 開通**：雖然 Cloudflare R2 儲存提供了足夠寬裕、在筆記場景中完全不會超量的[免費儲存額度](https://developers.cloudflare.com/r2/pricing/#free-tier)，但需先開通 R2 subscription 並綁定付款方式。Cloudflare [官方支援](https://developers.cloudflare.com/billing/get-started/update-billing-info/#supported-payment-methods) 銀聯（UnionPay）、Visa、Mastercard 等金融卡與信用卡，以及 PayPal、Apple Pay、Google Pay 等付款方式。
 
 </details>
 

@@ -108,7 +108,7 @@ Kopiere den folgenden Prompt direkt in einen KI-Agenten (z. B. Codex, Claude, Cu
 ```text
 Stelle EdgeEver vollständig über GitHub und Cloudflare bereit:
 1. Forke https://github.com/tianma-if/edgeever.
-2. Erstelle D1 `edgeever` und R2 `edgeever-resources` in Cloudflare.
+2. Erstelle D1 `edgeever` in Cloudflare.
 3. Wähle in Workers & Pages „Start with Hello World!“ und erstelle einen Worker namens `edgeever`.
 4. Trage das vom Nutzer gewählte Passwort als Runtime-Secret `EDGE_EVER_AUTH_PASSWORD`
    unter Settings → Variables and Secrets ein und stelle das Secret bereit (vorzugsweise mindestens
@@ -130,7 +130,7 @@ Stelle EdgeEver vollständig über GitHub und Cloudflare bereit:
 Führe die folgenden 7 Schritte im Webbrowser exakt in dieser Reihenfolge durch:
 
 1. **Repository forken**: Klicke oben rechts auf GitHub auf **Fork**, um EdgeEver in dein persönliches Konto zu forken.
-2. **Cloudflare-Ressourcen erstellen**: Erstelle D1 `edgeever` und R2 `edgeever-resources`.
+2. **Cloudflare-Ressourcen erstellen**: Erstelle D1 `edgeever`.
 3. **Worker erstellen**: Wähle in Cloudflare Workers & Pages Create application → Start with Hello World!, benenne den Worker `edgeever` und stelle ihn bereit. Dies erstellt einen Platzhalter; EdgeEver wird in Schritt 7 bereitgestellt.
 4. **Administrator-Passwort festlegen**: Füge unter Settings → Variables and Secrets des Workers `EDGE_EVER_AUTH_PASSWORD` als Typ Secret hinzu und klicke auf Deploy. Der Wert ist dein frei gewähltes Anmeldekennwort, vorzugsweise mindestens 32 Zeichen lang. Schließe dies ab, bevor du den Fork verbindest.
 5. **Fork verbinden**: Wähle in Settings → Builds → Connect des bestehenden Workers den Fork und den Produktionsbranch `main` aus.
@@ -142,11 +142,9 @@ Führe die folgenden 7 Schritte im Webbrowser exakt in dieser Reihenfolge durch:
 </details>
 
 <details>
-<summary>📌 Hinweise zur Cloudflare-Bereitstellung anzeigen (Eigene Domain & kostenloses R2-Kontingent)</summary>
+<summary>📌 Hinweise zur Cloudflare-Bereitstellung anzeigen (Eigene Domain)</summary>
 
 > **Eigene Domain & Zugriff**: Nach der Bereitstellung kannst du direkt die von Cloudflare zugewiesene Standard-Domain `*.workers.dev` nutzen oder in den Worker-Einstellungen unter **Settings → Domains & Routes** eine eigene Domain einbinden.
->
-> **Cloudflare R2-Aktivierung**: Obwohl Cloudflare R2 ein großzügiges [kostenloses Speicherkontingent](https://developers.cloudflare.com/r2/pricing/#free-tier) bietet, innerhalb dessen typische Notiz-Workloads vollständig verbleiben, musst du zunächst ein R2-Abonnement aktivieren und eine Zahlungsmethode hinterlegen. Cloudflare [unterstützt offiziell](https://developers.cloudflare.com/billing/get-started/update-billing-info/#supported-payment-methods) UnionPay, Visa, Mastercard und weitere Karten sowie PayPal, Apple Pay, Google Pay und andere Zahlungsmethoden.
 
 </details>
 

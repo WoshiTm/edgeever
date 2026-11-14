@@ -108,7 +108,7 @@ Cloudflare — это рекомендуемый вариант бессерве
 ```text
 Разверни EdgeEver полностью через GitHub и Cloudflare:
 1. Создай форк https://github.com/tianma-if/edgeever.
-2. Создай базу данных D1 `edgeever` и хранилище R2 `edgeever-resources` в Cloudflare.
+2. Создай базу данных D1 `edgeever` в Cloudflare.
 3. В Workers & Pages выбери «Start with Hello World!» и создай Worker с именем `edgeever`.
 4. Добавь выбранный пользователем пароль в виде секрета среды выполнения `EDGE_EVER_AUTH_PASSWORD`
    в разделе Settings → Variables and Secrets и выполни Deploy для секрета (рекомендуется
@@ -131,7 +131,7 @@ Cloudflare — это рекомендуемый вариант бессерве
 Выполните следующие 7 шагов в веб-интерфейсе строго по порядку:
 
 1. **Создайте форк репозитория**: Нажмите **Fork** в правом верхнем углу страницы репозитория на GitHub, чтобы создать копию EdgeEver в своем аккаунте.
-2. **Создайте ресурсы в Cloudflare**: Создайте базу данных D1 `edgeever` и бакет R2 `edgeever-resources`.
+2. **Создайте ресурсы в Cloudflare**: Создайте базу данных D1 `edgeever`.
 3. **Создайте Worker**: В разделе Cloudflare Workers & Pages выберите Create application → Start with Hello World!, назовите Worker `edgeever` и разверните его. Это создаст заглушку; сам EdgeEver будет развернут на шаге 7.
 4. **Установите пароль администратора**: В настройках Worker в разделе Settings → Variables and Secrets добавьте переменную `EDGE_EVER_AUTH_PASSWORD` с типом Secret и нажмите Deploy. Ее значение — ваш пароль для входа, желательно длиной не менее 32 символов. Выполните это действие до подключения форка.
 5. **Подключите форк**: В настройках существующего Worker в разделе Settings → Builds → Connect выберите ваш форк и рабочую ветку `main`.
@@ -143,11 +143,9 @@ Cloudflare — это рекомендуемый вариант бессерве
 </details>
 
 <details>
-<summary>📌 Примечания по развертыванию на Cloudflare (собственный домен и бесплатный лимит R2)</summary>
+<summary>📌 Примечания по развертыванию на Cloudflare (собственный домен)</summary>
 
 > **Собственный домен и доступ**: После развертывания вы можете использовать стандартный домен `*.workers.dev`, назначенный Cloudflare, либо подключить собственный домен в настройках Worker: **Settings → Domains & Routes**.
->
-> **Активация Cloudflare R2**: Хотя Cloudflare R2 предоставляет щедрый [бесплатный лимит хранилища](https://developers.cloudflare.com/r2/pricing/#free-tier), объема которого полностью хватает для задач ведения заметок, вам потребуется предварительно активировать подписку R2 и привязать способ оплаты. Cloudflare [официально поддерживает](https://developers.cloudflare.com/billing/get-started/update-billing-info/#supported-payment-methods) карты UnionPay, Visa, Mastercard и другие, а также PayPal, Apple Pay, Google Pay и прочие платежные методы.
 
 </details>
 

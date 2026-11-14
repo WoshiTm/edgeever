@@ -24,7 +24,11 @@ import {
 import { getWorkspaceId } from "./request-auth";
 import type { BlobUploadedPart } from "./storage-contract";
 
-export const RESOURCE_UPLOAD_PART_BYTES = 8 * 1024 * 1024;
+// 2 MiB parts keep every part request small enough for the Workers Free
+// plan (10 ms CPU / 128 MB isolate): 8 MiB parts intermittently died with
+// error 1102 on the live D1-backed deployment. Clients read partSize from
+// the initiate response, so no client change is needed.
+export const RESOURCE_UPLOAD_PART_BYTES = 2 * 1024 * 1024;
 export const RESOURCE_UPLOAD_TTL_MS = 24 * 60 * 60 * 1000;
 
 export type ResourceUploadRow = {

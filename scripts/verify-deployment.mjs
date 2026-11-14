@@ -20,6 +20,10 @@ export const REQUIRED_TABLES = [
   "ai_provider_configs",
   "ai_models",
   "ai_workspace_settings",
+  "d1_blob_objects",
+  "d1_blob_chunks",
+  "d1_blob_multipart_uploads",
+  "d1_blob_multipart_parts",
 ];
 
 export const buildSchemaVerificationSql = () =>
@@ -179,7 +183,7 @@ export const verifyCloudflareWorkerHealth = async ({
         );
       } else if (payload?.error?.code === "object_storage_not_ready") {
         lastFailure = new Error(
-          `Deployed Worker reports object_storage_not_ready at ${healthUrl}. Check that the RESOURCES binding points to the configured R2 bucket.`,
+          `Deployed Worker reports object_storage_not_ready at ${healthUrl}. Current Worker versions store resources in D1 when no RESOURCES binding is configured; redeploy the current version and retry.`,
         );
       } else {
         const diagnostic = payload?.error?.code || `${response.status} ${response.statusText}`.trim();

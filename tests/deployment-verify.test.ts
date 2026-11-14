@@ -126,14 +126,14 @@ describe("deployment verification", () => {
     })).rejects.toThrow("may differ from the DB binding used by the live Worker");
   });
 
-  test("diagnoses a live Worker without its R2 binding", async () => {
+  test("diagnoses a live Worker predating the D1 resource backend", async () => {
     expect(verifyCloudflareWorkerHealth({
       deploymentUrl: "https://notes.example.com",
       attempts: 1,
       fetchImpl: async () => Response.json({
         error: { code: "object_storage_not_ready" },
       }, { status: 503 }),
-    })).rejects.toThrow("RESOURCES binding points to the configured R2 bucket");
+    })).rejects.toThrow("store resources in D1 when no RESOURCES binding is configured");
   });
 
   test("preserves Cloudflare runtime diagnostics for an unknown health failure", async () => {

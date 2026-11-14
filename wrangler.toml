@@ -27,10 +27,15 @@ database_name = "edgeever"
 database_id = "00000000-0000-0000-0000-000000000000"
 migrations_dir = "migrations"
 
-[[r2_buckets]]
-binding = "RESOURCES"
-bucket_name = "edgeever-resources"
-preview_bucket_name = "edgeever-resources-preview"
+# No R2 binding: when RESOURCES is unbound the Worker stores resource bytes in
+# D1 (see apps/api/src/d1-blob-store.ts). To use R2 instead, restore the
+# [[r2_buckets]] binding for "edgeever-resources" below and create the bucket;
+# deployments that already store bytes in R2 must keep the binding, or their
+# existing resources become unreadable until it is restored.
+# [[r2_buckets]]
+# binding = "RESOURCES"
+# bucket_name = "edgeever-resources"
+# preview_bucket_name = "edgeever-resources-preview"
 
 [observability]
 enabled = true
